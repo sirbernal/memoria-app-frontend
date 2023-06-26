@@ -23,7 +23,7 @@ export function AuthProvider({ children }){
     
 
     const [isAuthenticated, setAuthenticated] = useState(checkAuthinLocalStorage());
-    const [userType, setUserType] = useState(checkUserType());
+    const [userType] = useState(checkUserType());
 
     const login = (data) => {
         localStorage.setItem("auth", JSON.stringify(data));

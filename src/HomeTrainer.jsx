@@ -1,12 +1,12 @@
 import React from 'react';
 //import './home.css';
-import { useState, useEffect, useContext } from 'react';
-import { Button, Modal, Layout, Menu, theme, Col, Row, Typography, Form, Input, message } from 'antd';
+import { useState, useEffect} from 'react';
+import { Button, Modal, Layout, theme, Col, Row, Typography, Form, Input, message } from 'antd';
 import { InfoCircleOutlined, EditOutlined } from '@ant-design/icons';
 import { MySider } from './components/Layout/MySider';
 
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Footer} = Layout;
 const { Title } = Typography;
 
 function HomeTrainer() {
@@ -24,7 +24,7 @@ function HomeTrainer() {
     fetch(`${process.env.REACT_APP_API_URL}/sesiones/${userid}/${trainerid}`)
       .then(response => response.json())
       .then(data => setSessions(data));
-  }, []);
+  }, [auth.associate_user, auth.trainer_id]);
 
 
   const showModal = () => {

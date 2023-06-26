@@ -1,27 +1,10 @@
 import React from 'react';
-import { useState, useEffect, useContext } from 'react';
-import { Button, Modal, Layout, Menu, theme, Col, Row, Typography } from 'antd';
+import { useState, useEffect} from 'react';
+import { Button, Modal, Layout, theme, Col, Row, Typography } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { MySider } from './components/Layout/MySider';
-import { AuthContext } from './components/AuthContext';
 
-function getItem(label, key, icon, children) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  };
-}
-
-/*
-const items = [
-  getItem('User', 'sub1', <UserOutlined />, [
-    getItem('Cerrar sesión', '3', <CloseCircleOutlined />),
-  ])
-];
-*/
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Footer} = Layout;
 const { Title } = Typography;
 
 function HomeUser() {
@@ -39,13 +22,8 @@ function HomeUser() {
     fetch(`${process.env.REACT_APP_API_URL}/sesiones/${userid}/${trainerid}`)
       .then(response => response.json())
       .then(data => setSessions(data));
-  }, []); 
+  }, [auth.associate_trainer, auth.user_id]); 
 
-  const [activeSession, setActiveSession] = useState(null);
-
-  const handleSessionClick = (id) => {
-    setActiveSession(id === activeSession ? null : id);
-  };
 
   const showModal = () => {
     setIsModalOpen(true);

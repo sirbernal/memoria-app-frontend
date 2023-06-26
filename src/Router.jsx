@@ -1,38 +1,9 @@
-// import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
-// import React from 'react';
-
-// export function Routes() {
-//   const {  connected } = useWallet();
-//   const { streak } = React.useContext(PracticeContext)
-//   return (
-//     <>
-//       <HashRouter basename={'/'}>
-//           <Switch>
-//             <Route exact path="/">
-//               <Redirect to={getTradePageUrl()} />
-//             </Route>
-//             <Route exact path="/market/:marketAddress">
-//               <TradePage />
-//             </Route>
-//             <Route exact path="/expert">
-//             {Number(streak) >= 2 && connected ? <ExpertPage /> :<Redirect to="/" /> }
-//             </Route>
-//           </Switch>
-//       </HashRouter>
-//     </>
-//   );
-// }
-
-//import './App.css';
 import Login from './Login';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import HomeUser from './HomeUser'
 import HomeTrainer from './HomeTrainer'
 import { AuthContext } from './components/AuthContext';
-import { useContext, useState } from 'react';
-
-//REVISAR: https://stackoverflow.com/questions/68727068/how-do-i-usecontext-hook-on-react-router-v6
-
+import { useContext} from 'react';
 
 const PrivateRoute = ({ isAuthenticated , children }) => {
   return isAuthenticated ? children : <Navigate to="/" />;
