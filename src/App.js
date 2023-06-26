@@ -1,18 +1,29 @@
+//import 'antd/dist/reset.css';
 import './App.css';
-import Login from './Login';
-import { BrowserRouter,  Routes, Route } from 'react-router-dom';
-import HomeUser from './HomeUser'
-import HomeTrainer from './HomeTrainer'
+import { AuthProvider } from './components/AuthContext';
+import { Router } from './Router';
+import { ConfigProvider, theme } from 'antd';
+//REVISAR: https://stackoverflow.com/questions/68727068/how-do-i-usecontext-hook-on-react-router-v6
+import enUS from 'antd/locale/en_US';
 
 function App() {
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/home_user" element={<HomeUser />} />
-        <Route path="/home_trainer" element={<HomeTrainer />} />
-      </Routes>
-    </BrowserRouter>
+    <ConfigProvider
+      theme={{
+        token: {
+          // any theme overirdes
+          colorPrimary: '#7f00ff',
+        },
+        // this line sets it to dark mode
+        algorithm: theme.darkAlgorithm,
+      }}
+      locale={enUS}
+    >
+    <AuthProvider>
+      <Router/>
+    </AuthProvider>
+  </ConfigProvider>
   );
 }
 
