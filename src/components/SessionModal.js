@@ -15,6 +15,9 @@ const SessionModal = ({ session }) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   }
+  console.log(session.training_details)
+
+  const training_details_array = session.training_details.split("\n")
 
   return (
     <>
@@ -25,6 +28,12 @@ const SessionModal = ({ session }) => {
       
         <p>{session.description}</p>
         <p>Link sesion: <a href={session.sessions_url}>{session.sessions_url}</a></p>
+        <ul>
+        {training_details_array.map( (details) => (
+          <li> {details} </li>
+        )
+        )}
+        </ul>
       
       </Modal>
     </div>  
