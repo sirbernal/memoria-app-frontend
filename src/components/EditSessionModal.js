@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Button, Form, Input } from 'antd';
+import { Modal, Button, Form, Input, message } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 
 const EditSessionModal = ({ session }) => {
@@ -10,10 +10,38 @@ const EditSessionModal = ({ session }) => {
     setIsModalOpen(true);
   }
 
-  const handleOk = () => {
+  const handleOk = async () => {
     // Aquí puedes acceder a los valores del formulario y utilizarlos para actualizar la sesión
-    const values = form.getFieldsValue();
-    console.log(values);
+    try {
+      const values = await form.validateFields();
+      
+      console.log(values)
+
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/sesiones/${values._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title: values.title,
+          description: values.description,
+          sessions_url: values.sessions_url,
+          trainer_id: values.trainer_id,
+          user_id: values.user_id,
+          training_details: values.training_details
+        }),
+      });
+      const data = await response.json();
+      console.log(data)
+      if (response.status === 200) {
+        message.success('Sesión actualizada');
+      }
+
+      
+    } catch (error) {
+      console.log("Error al validar el formulario:", error);
+      message.error('Problema al actualizar sesión');
+    }
     setIsModalOpen(false);
   }
 

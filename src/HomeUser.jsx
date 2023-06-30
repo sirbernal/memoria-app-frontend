@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState, useEffect} from 'react';
-import { Button, Modal, Layout, theme, Col, Row, Typography } from 'antd';
-import { InfoCircleOutlined } from '@ant-design/icons';
+import { Layout, theme, Col, Row, Typography } from 'antd';
 import { MySider } from './components/Layout/MySider';
 import SessionModal from './components/SessionModal';
 
@@ -10,7 +9,6 @@ const { Title } = Typography;
 
 function HomeUser() {
   const [sessions, setSessions] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const { token: { colorBgContainer } } = theme.useToken();
 
   const auth = JSON.parse(localStorage.getItem("auth"))
@@ -24,19 +22,6 @@ function HomeUser() {
       .then(response => response.json())
       .then(data => setSessions(data));
   }, [auth.associate_trainer, auth.user_id]); 
-
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
 
 
   return (
