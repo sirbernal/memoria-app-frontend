@@ -3,6 +3,7 @@ import { useState, useEffect} from 'react';
 import { Button, Modal, Layout, theme, Col, Row, Typography } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { MySider } from './components/Layout/MySider';
+import SessionModal from './components/SessionModal';
 
 const { Header, Content, Footer} = Layout;
 const { Title } = Typography;
@@ -47,7 +48,7 @@ function HomeUser() {
           background: colorBgContainer,
         }}
         />
-        <Content style={{ padding: '0 50px' }}>
+        <Content style={{ padding: '0 10px' }}>
           <div
             style={{
               padding: 24,
@@ -57,16 +58,12 @@ function HomeUser() {
           >
             {sessions.map((session) => (
               <>
-                <Row justify="center" align="stretch">
+                <Row justify="center" align="stretch" className='justify-content-center align-item-center' style={{margin: "1rem"}}>
                   <Col span={12}>
-                    <Title level={4}>{session.title}</Title>
+                    <Title level={4} style={{margin: "0"}}>{session.title}</Title>
                   </Col>
-                  <Col span={12} style={{ display: 'flex', justifyContent: 'flex-end' }} >
-                    <Button type="primary" onClick={showModal} icon={<InfoCircleOutlined />}></Button>
-                    <Modal title={session.title} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                      <p>{session.description}</p>
-                      <p>Link sesion: <a href={session.sessions_url}>{session.sessions_url}</a></p>
-                    </Modal>
+                  <Col span={12} style={{ display: 'flex', justifyContent: 'flex-end', alignContent: "space-around", flexWrap: "wrap"}} >
+                  <SessionModal session={session}></SessionModal>
                   </Col>
                 </Row>
 

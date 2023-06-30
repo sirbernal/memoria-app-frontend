@@ -4,6 +4,8 @@ import { useState, useEffect} from 'react';
 import { Button, Modal, Layout, theme, Col, Row, Typography, Form, Input, message } from 'antd';
 import { InfoCircleOutlined, EditOutlined } from '@ant-design/icons';
 import { MySider } from './components/Layout/MySider';
+import SessionModal from './components/SessionModal';
+import EditSessionModal from './components/EditSessionModal'
 
 
 const { Header, Content, Footer} = Layout;
@@ -23,8 +25,10 @@ function HomeTrainer() {
     const trainerid = auth.trainer_id
     fetch(`${process.env.REACT_APP_API_URL}/sesiones/${userid}/${trainerid}`)
       .then(response => response.json())
-      .then(data => setSessions(data));
-  }, [auth.associate_user, auth.trainer_id]);
+      .then(data => setSessions(data))
+      .catch(() => console.log("x"))
+    console.log(auth.trainer_id)
+  }, []);
 
 
   const showModal = () => {
@@ -91,7 +95,7 @@ function HomeTrainer() {
           background: colorBgContainer,
         }}
         />
-        <Content style={{ padding: '0 50px' }}>
+        <Content style={{ padding: '0 10px' }}>
           <div
             style={{
               padding: 24,
@@ -101,50 +105,16 @@ function HomeTrainer() {
           >
             {sessions.map((session) => (
               <>
-                <Row justify="center" align="stretch">
+                <Row justify="center" align="stretch" style={{margin: "1rem"}}>
                   <Col span={12}>
-                    <Title level={4}>{session.title}</Title>
+                    <Title level={4} style={{margin: "0"}}>{session.title}</Title>
                   </Col>
                   <Col span={12} style={{ display: 'flex', justifyContent: 'flex-end', alignContent: "space-around", flexWrap: "wrap"}} >
-                    <Button type="primary" onClick={showModal} icon={<InfoCircleOutlined />}></Button>
-                    <Modal title={session.title} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                      <p>{session.description}</p>
-                      <p>Link sesion: <a href={session.sessions_url}>{session.sessions_url}</a></p>
-                    </Modal>
-                    <Button type="primary" onClick={showModal2} icon={<EditOutlined />}></Button>
-                    <Modal title={session.title} open={isModal2Open} onOk={handleOk2} onCancel={handleCancel2} okText="Editar" cancelText="Cancelar">
-                      <Form
-                        form={form}
-                        layout="vertical"
-                        name="form_in_modal"
-                        initialValues={session}
-                      >
-                        <Form.Item name="title" label="Titulo">
-                          <Input defaultValue={session.title} autoComplete='off'/>
-                        </Form.Item>
-                        <Form.Item name="description" label="Descripción">
-                          <Input type="textarea" defaultValue={session.description} autoComplete='off'/>
-                        </Form.Item>
-                        <Form.Item name="sessions_url" label="Url de entrenamiento">
-                          <Input type="textarea" defaultValue={session.sessions_url} value={session.sessions_url} autoComplete='off'/>
-                        </Form.Item>
-                        <Form.Item name="training_details" label="Detalle de entrenamiento">
-                          <Input.TextArea type="textarea" defaultValue={session.sessions_url} autoSize={{
-                            minRows: 3,
-                            maxRows: 5,
-                          }} autoComplete='off' />
-                        </Form.Item>
-                        <Form.Item name="_id" label="_id" hidden={true} >
-                        </Form.Item>
-                        <Form.Item name="trainer_id" label="trainer_id" hidden={true} >
-                        </Form.Item>
-                        <Form.Item name="user_id" label="user_id" hidden={true} >
-                        </Form.Item>
-                      </Form>
-                    </Modal>
+                    <SessionModal session={session}></SessionModal>
+                    <EditSessionModal session={session} />
                   </Col>
                 </Row>
-
+              
               </>
             ))}
           </div>
