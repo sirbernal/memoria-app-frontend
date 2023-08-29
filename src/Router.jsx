@@ -4,6 +4,7 @@ import HomeUser from './HomeUser'
 import HomeTrainer from './HomeTrainer'
 import { AuthContext } from './components/AuthContext';
 import { useContext} from 'react';
+import ViewTrainers from './ViewTrainers';
 
 const PrivateRoute = ({ isAuthenticated , children }) => {
   return isAuthenticated ? children : <Navigate to="/" />;
@@ -32,6 +33,7 @@ export function Router() {
         <Route path="/" element={<LoginByPass isAuthenticated={isAuthenticated} type_user={userType}> <Login/> </LoginByPass> } />
         <Route path="/home_user" element={<PrivateRoute isAuthenticated={isAuthenticated}> <HomeUser/> </PrivateRoute>} />
         <Route path="/home_trainer" element={<PrivateRoute isAuthenticated={isAuthenticated}> <HomeTrainer/> </PrivateRoute>} />
+        <Route path="/view_trainers" element={<PrivateRoute isAuthenticated={isAuthenticated}> <ViewTrainers></ViewTrainers> </PrivateRoute>} />
         <Route path="/logout" element={ <Logout/> } />
       </Routes>
     </BrowserRouter>

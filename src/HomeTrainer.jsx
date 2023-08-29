@@ -5,6 +5,8 @@ import { Layout, theme, Col, Row, Typography} from 'antd';
 import { MySider } from './components/Layout/MySider';
 import SessionModal from './components/SessionModal';
 import EditSessionModal from './components/EditSessionModal'
+import DeleteSessionModal from './components/DeleteSessionModal';
+import CreateSessionModal from './components/CreateSessionModal';
 
 
 const { Header, Content, Footer} = Layout;
@@ -44,6 +46,7 @@ function HomeTrainer() {
               background: colorBgContainer,
             }}
           >
+            <CreateSessionModal user_id={auth.associate_user[0]} trainer_id={auth.trainer_id} sessions={sessions} setSessions={setSessions}></CreateSessionModal>
             {sessions.map((session) => (
               <>
                 <Row justify="center" align="stretch" style={{margin: "1rem"}}>
@@ -52,6 +55,7 @@ function HomeTrainer() {
                   </Col>
                   <Col span={12} style={{ display: 'flex', justifyContent: 'flex-end', alignContent: "space-around", flexWrap: "wrap"}} >
                     <SessionModal session={session}></SessionModal>
+                    <DeleteSessionModal session_id={session._id} setSessions={setSessions} sessions={sessions}></DeleteSessionModal>
                     <EditSessionModal session={session} />
                   </Col>
                 </Row>

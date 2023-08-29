@@ -24,7 +24,7 @@ const SessionModal = ({ session }) => {
     <div style={{display: "flex", justifyContent: "center"}}>
       <Button type="primary" onClick={showModal} icon={<InfoCircleOutlined />} style={ {marginRight: "5px", marginLeft: "auto"}}>
       </Button>
-      <Modal title={session.title} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}> 
+      <Modal title={session.title} open={isModalOpen} onOk={handleOk} onCancel={handleCancel} okText="Cerrar" cancelButtonProps={{ style: { display: 'none' } }}> 
       
         <p>{session.description}</p>
         <p>Link sesion: <a href={session.sessions_url}>{session.sessions_url}</a></p>
