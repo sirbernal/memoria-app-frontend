@@ -2,7 +2,29 @@ import React, { useState } from 'react';
 import { Modal, Button, Form, Input, message } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 
-const EditSessionModal = ({ session }) => {
+function modifyLocalSessions(sessions, id, new_session) {
+  let new_sessions = []
+  for (let i = 0; i < sessions.length; i++) {
+    let session = sessions[i]
+    console.log(session)
+    console.log(session._id, id)
+    console.log(session._id === id)
+    if (session._id === id)  {
+      session.title = new_session.title
+      session.description = new_session.description
+      session.sessions_url = new_session.sessions_url
+      session.trainer_id = new_session.trainer_id
+      session.user_id = new_session.user_id
+      session.training_details = new_session.training_details
+    }
+    new_sessions.push(session)
+  }
+  console.log(new_sessions)
+  return new_sessions
+}
+
+
+const EditSessionModal = ({ session, sessions, setSessions }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
 
@@ -17,24 +39,28 @@ const EditSessionModal = ({ session }) => {
       
       console.log(values)
 
+      const new_session = {
+        title: values.title,
+        description: values.description,
+        sessions_url: values.sessions_url,
+        trainer_id: values.trainer_id,
+        user_id: values.user_id,
+        training_details: values.training_details
+      }
+
+      console.log(new_session)
       const response = await fetch(`${process.env.REACT_APP_API_URL}/sesiones/${values._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          title: values.title,
-          description: values.description,
-          sessions_url: values.sessions_url,
-          trainer_id: values.trainer_id,
-          user_id: values.user_id,
-          training_details: values.training_details
-        }),
+        body: JSON.stringify(new_session),
       });
       const data = await response.json();
       console.log(data)
       if (response.status === 200) {
         message.success('Sesión actualizada');
+        setSessions(modifyLocalSessions(sessions, values._id, new_session))
       }
 
       

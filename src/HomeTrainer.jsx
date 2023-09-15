@@ -51,12 +51,12 @@ function HomeTrainer() {
               <>
                 <Row justify="center" align="stretch" style={{margin: "1rem"}}>
                   <Col span={12}>
-                    <Title level={4} style={{margin: "0"}}>{session.title}</Title>
+                    <Title level={5} style={{margin: "0"}}>{session.title}</Title>
                   </Col>
                   <Col span={12} style={{ display: 'flex', justifyContent: 'flex-end', alignContent: "space-around", flexWrap: "wrap"}} >
                     <SessionModal session={session}></SessionModal>
                     <DeleteSessionModal session_id={session._id} setSessions={setSessions} sessions={sessions}></DeleteSessionModal>
-                    <EditSessionModal session={session} />
+                    <EditSessionModal session={session} setSessions={setSessions} sessions={sessions}/>
                   </Col>
                 </Row>
               
