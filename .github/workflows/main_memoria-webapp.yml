@@ -26,10 +26,10 @@ jobs:
       
       # Create a zip file with the application files
       - name: Create zip file
-        uses: actions/create-zip-file@v1
+        uses: montudor/action-zip@v0.1.0
         with:
-          files: '.'
-          dest: 'node-app.zip'
+          args: zip -qq -r node-app.zip .
+
 
       # Upload the zip file as an artifact for deployment job
       - name: Upload artifact for deployment job
