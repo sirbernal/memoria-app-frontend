@@ -9,7 +9,7 @@ function modifyLocalSessions(sessions, id, new_session) {
     console.log(session)
     console.log(session._id, id)
     console.log(session._id === id)
-    if (session._id === id)  {
+    if (session._id === id) {
       session.title = new_session.title
       session.description = new_session.description
       session.sessions_url = new_session.sessions_url
@@ -36,7 +36,7 @@ const EditSessionModal = ({ session, sessions, setSessions }) => {
     // Aquí puedes acceder a los valores del formulario y utilizarlos para actualizar la sesión
     try {
       const values = await form.validateFields();
-      
+
       console.log(values)
 
       const new_session = {
@@ -62,13 +62,18 @@ const EditSessionModal = ({ session, sessions, setSessions }) => {
         message.success('Sesión actualizada');
         setSessions(modifyLocalSessions(sessions, values._id, new_session))
       }
+      setIsModalOpen(false);
 
-      
+
     } catch (error) {
-      console.log("Error al validar el formulario:", error);
-      message.error('Problema al actualizar sesión');
+      if ("errorFields" in error) {
+        console.log("Error al validar el formulario:", error);
+      } else {
+        console.log("Error al validar el formulario:", error);
+        message.error('Problema al actualizar sesión');
+        setIsModalOpen(false);
+      }
     }
-    setIsModalOpen(false);
   }
 
   const handleCancel = () => {
@@ -85,16 +90,40 @@ const EditSessionModal = ({ session, sessions, setSessions }) => {
           name="form_in_modal"
           initialValues={session}
         >
-          <Form.Item name="title" label="Titulo">
-            <Input autoComplete='off'/>
+          <Form.Item name="title" label="Titulo"
+          rules={[
+            {
+              required: true,
+              message: "Por favor, ingrese el título de la sesión de entrenamiento",
+            },
+          ]}>
+            <Input autoComplete='off' />
           </Form.Item>
-          <Form.Item name="description" label="Descripción">
-            <Input type="textarea" autoComplete='off'/>
+          <Form.Item name="description" label="Descripción"
+          rules={[
+            {
+              required: true,
+              message: "Por favor, ingrese la description de la sesión de entrenamiento",
+            },
+          ]}>
+            <Input type="textarea" autoComplete='off' />
           </Form.Item>
-          <Form.Item name="sessions_url" label="Url de entrenamiento">
-            <Input type="textarea" autoComplete='off'/>
+          <Form.Item name="sessions_url" label="Link de entrenamiento"
+          rules={[
+            {
+              required: true,
+              message: "Por favor, ingrese el link de entrenamiento de la sesión",
+            },
+          ]}>
+            <Input type="textarea" autoComplete='off' />
           </Form.Item>
-          <Form.Item name="training_details" label="Detalle de entrenamiento">
+          <Form.Item name="training_details" label="Detalle de entrenamiento"
+          rules={[
+            {
+              required: true,
+              message: "Por favor, ingrese el detalle de los ejercicios de la sesión de entrenamiento",
+            },
+          ]}>
             <Input.TextArea type="textarea" autoSize={{
               minRows: 3,
               maxRows: 5,
