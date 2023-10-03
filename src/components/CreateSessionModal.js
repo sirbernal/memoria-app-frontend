@@ -19,7 +19,8 @@ const CreateSessionModal = ({ user_id, trainer_id, sessions, setSessions }) => {
         sessions_url: values.sessions_url,
         trainer_id: trainer_id,
         user_id: user_id,
-        training_details: values.training_details
+        training_details: values.training_details,
+        link_videos: values.link_videos
       }
       console.log(values)
       const response = await fetch(`${process.env.REACT_APP_API_URL}/sesiones/`, {
@@ -47,12 +48,29 @@ const CreateSessionModal = ({ user_id, trainer_id, sessions, setSessions }) => {
 
 
     }
-    
+
   }
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    message.info('No se ha agregado la sesión');
   }
+
+  const handleClick = () => {
+    form.setFieldsValue(sessions[sessions.length - 1]);
+  };
+
+  const clearForm = () => {
+    form.setFieldsValue({
+      title: "",
+      description: "",
+      sessions_url: "",
+      trainer_id: "",
+      user_id: "",
+      training_details: "",
+      link_videos: ""
+    });
+  };
 
   return (
     <>
@@ -64,44 +82,57 @@ const CreateSessionModal = ({ user_id, trainer_id, sessions, setSessions }) => {
           name="form_in_modal"
         >
           <Form.Item name="title" label="Titulo"
-          rules={[
-            {
-              required: true,
-              message: "Por favor, ingrese el título de la sesión de entrenamiento",
-            },
-          ]}>
+            rules={[
+              {
+                required: true,
+                message: "Por favor, ingrese el título de la sesión de entrenamiento",
+              },
+            ]}>
             <Input autoComplete='off' />
           </Form.Item>
           <Form.Item name="description" label="Descripción"
-          rules={[
-            {
-              required: true,
-              message: "Por favor, ingrese la description de la sesión de entrenamiento",
-            },
-          ]}>
+            rules={[
+              {
+                required: true,
+                message: "Por favor, ingrese la description de la sesión de entrenamiento",
+              },
+            ]}>
             <Input type="textarea" autoComplete='off' />
           </Form.Item>
-          <Form.Item name="sessions_url" label="Link de entrenamiento" 
-          rules={[
-            {
-              required: true,
-              message: "Por favor, ingrese el link de entrenamiento de la sesión",
-            },
-          ]}>
+          <Form.Item name="sessions_url" label="Link de entrenamiento"
+            rules={[
+              {
+                required: true,
+                message: "Por favor, ingrese el link de entrenamiento de la sesión",
+              },
+            ]}>
             <Input type="textarea" autoComplete='off' required={true} />
           </Form.Item>
-          <Form.Item name="training_details" label="Detalle de entrenamiento" 
-           rules={[
-            {
-              required: true,
-              message: "Por favor, ingrese el detalle de los ejercicios de la sesión de entrenamiento",
-            },
-          ]}>
+          <Form.Item name="training_details" label="Detalle de entrenamiento"
+            rules={[
+              {
+                required: true,
+                message: "Por favor, ingrese el detalle de los ejercicios de la sesión de entrenamiento",
+              },
+            ]}>
             <Input.TextArea type="textarea" autoSize={{
               minRows: 3,
               maxRows: 5,
             }} autoComplete='off' />
           </Form.Item>
+          <Form.Item name="link_videos" label="Videos de entrenamiento de referencia">
+            <Input.TextArea type="textarea" autoSize={{
+              minRows: 3,
+              maxRows: 5,
+            }} autoComplete='off' />
+          </Form.Item>
+          <Button type="primary" onClick={handleClick}>
+            Rellenar con ultima sesión
+          </Button>
+          <div style={{ margin: '10px' }}></div>
+          <Button type="primary" onClick={clearForm}>
+            Limpiar campos
+          </Button>
         </Form>
       </Modal>
     </>

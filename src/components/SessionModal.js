@@ -28,12 +28,18 @@ const SessionModal = ({ session }) => {
       
         <p>{session.description}</p>
         <p>Link sesion: <a href={session.sessions_url}>{session.sessions_url}</a></p>
+        <p>Detalle entrenamiento:</p>
         <ul>
         {training_details_array.map( (details) => (
           <li> {details} </li>
         )
         )}
         </ul>
+        {session.link_videos && (
+        <p>
+          Link videos de referencia: <a href={session.link_videos}>{session.link_videos}</a>
+        </p>
+      )}
       
       </Modal>
     </div>  

@@ -1,32 +1,33 @@
 
 import React, { useState } from 'react';
 import { ContactsOutlined } from '@ant-design/icons';
-import { Avatar, Card, Modal} from 'antd';
+import { Avatar, Card, Modal, Row, Col  } from 'antd';
+import { YoutubeOutlined, LinkedinOutlined, InstagramOutlined, FacebookOutlined, WhatsAppOutlined } from '@ant-design/icons';
 const { Meta } = Card;
 
-export const TrainerCard = ({ cover_img, meta_img, name, description, number, email }) => {
+export const TrainerCard = ({ cover_img, meta_img, name, short_description, full_description, number, email, socials }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     // Define la función que muestra el modal
     const showModal = () => {
-      setIsModalVisible(true);
+        setIsModalVisible(true);
     };
-  
+
     // Define la función que oculta el modal
     const hideModal = () => {
-      setIsModalVisible(false);
+        setIsModalVisible(false);
     };
-  
+
     // Define la función que se ejecuta al confirmar el modal
     const handleOk = () => {
-      console.log('OK');
-      hideModal();
+        console.log('OK');
+        hideModal();
     };
-  
+
     // Define la función que se ejecuta al cancelar el modal
     const handleCancel = () => {
-      console.log('Cancel');
-      hideModal();
+        console.log('Cancel');
+        hideModal();
     };
     return (
         <>
@@ -38,13 +39,13 @@ export const TrainerCard = ({ cover_img, meta_img, name, description, number, em
                     />
                 }
                 actions={[
-                    <ContactsOutlined  onClick={showModal}/>
+                    <ContactsOutlined onClick={showModal} />
                 ]}
             >
                 <Meta
                     avatar={<Avatar src={meta_img} />}
                     title={name}
-                    description={description}
+                    description={short_description}
 
                 />
             </Card>
@@ -56,8 +57,40 @@ export const TrainerCard = ({ cover_img, meta_img, name, description, number, em
                 cancelButtonProps={{ style: { display: 'none' } }}
             >
                 <p>Nombre: {name}</p>
-                <p>Teléfono: {number}</p>
-                <p>Email: {email}</p>
+                <p>Descripción: {full_description}</p>
+                <p>Teléfono: <a href={`tel:${number}`}>{number}</a></p>
+                <p>Email: <a href={`mailto:${email}`}>{email}</a></p>
+                {}
+                <p>Redes sociales:</p>
+                <Row justify="space-around">
+                    <Col>
+                        <a href={socials.youtube} target="_blank" rel="noreferrer">
+                            <YoutubeOutlined style={{ fontSize: '16px' }} />
+                        </a>
+                    </Col>
+                    <Col>
+                        <a href={socials.linkedin} target="_blank" rel="noreferrer">
+                            <LinkedinOutlined style={{ fontSize: '16px'}} />
+                        </a>
+                    </Col>
+                    <Col>
+                        <a href={socials.instagram} target="_blank" rel="noreferrer">
+                            <InstagramOutlined style={{ fontSize: '16px'}} />
+                        </a>
+                    </Col>
+                    <Col>
+                        <a href={socials.facebook} target="_blank" rel="noreferrer">
+                            <FacebookOutlined style={{ fontSize: '16px'}} />
+                        </a>
+                    </Col>
+                    <Col>
+                        <a href={`https://wa.me/${number}`} target="_blank" rel="noreferrer">
+                            <WhatsAppOutlined style={{ fontSize: '16px'}} />
+                        </a>
+                    </Col>
+
+                    
+                </Row>
             </Modal>
         </>
 

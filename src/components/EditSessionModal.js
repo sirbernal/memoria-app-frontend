@@ -45,7 +45,8 @@ const EditSessionModal = ({ session, sessions, setSessions }) => {
         sessions_url: values.sessions_url,
         trainer_id: values.trainer_id,
         user_id: values.user_id,
-        training_details: values.training_details
+        training_details: values.training_details,
+        link_videos: values.link_videos
       }
 
       console.log(new_session)
@@ -77,6 +78,7 @@ const EditSessionModal = ({ session, sessions, setSessions }) => {
   }
 
   const handleCancel = () => {
+    message.info('No se ha editado la sesión');
     setIsModalOpen(false);
   }
 
@@ -124,6 +126,12 @@ const EditSessionModal = ({ session, sessions, setSessions }) => {
               message: "Por favor, ingrese el detalle de los ejercicios de la sesión de entrenamiento",
             },
           ]}>
+            <Input.TextArea type="textarea" autoSize={{
+              minRows: 3,
+              maxRows: 5,
+            }} autoComplete='off' />
+          </Form.Item>
+          <Form.Item name="link_videos" label="Videos de entrenamiento de referencia">
             <Input.TextArea type="textarea" autoSize={{
               minRows: 3,
               maxRows: 5,
